@@ -751,17 +751,40 @@ const UserDashboard = () => {
         throw new Error('用户未登录');
       }
 
-      // 更新用户名和头像
-      const { error } = await supabase
-        .from('users')
-        .update({
+      // 添加调试信息
+      console.log('更新用户资料 - 用户信息:', {
+        id: user.id,
+        username: user.username,
+        type: typeof user.id
+      });
+      console.log('更新用户资料 - 新数据:', {
+        username: usernameInput,
+        icon: selectedIcon
+      });
+
+      // 使用fetch直接发送请求
+      const apiUrl = `https://ptteznhpucxroxuebuix.supabase.co/rest/v1/users?id=eq.${user.id}`;
+
+      const response = await fetch(apiUrl, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
           username: usernameInput,
           icon: selectedIcon,
           updated_at: new Date().toISOString()
         })
-        .eq('id', user.id);
+      });
 
-      if (error) throw error;
+      console.log('直接请求结果:', response);
+
+      if (!response.ok) {
+        throw new Error(`更新失败: ${response.status} ${response.statusText}`);
+      }
 
       // 使用系统提示框显示成功消息
       showAlert({
@@ -845,29 +868,60 @@ const UserDashboard = () => {
         throw new Error('用户未登录');
       }
 
-      // 验证当前密码
-      const { data, error } = await supabase
-        .from('users')
-        .select('password')
-        .eq('id', user.id)
-        .single();
+      // 使用fetch直接发送请求
+      console.log('更新密码 - 用户ID:', user.id);
 
-      if (error) throw error;
+      // 先验证当前密码
+      const verifyUrl = `https://ptteznhpucxroxuebuix.supabase.co/rest/v1/users?id=eq.${user.id}&select=password`;
 
-      if (data.password !== currentPassword) {
+      const verifyResponse = await fetch(verifyUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE'
+        }
+      });
+
+      console.log('验证密码 - 响应状态:', verifyResponse.status);
+
+      if (!verifyResponse.ok) {
+        throw new Error(`验证密码失败: ${verifyResponse.status} ${verifyResponse.statusText}`);
+      }
+
+      const userData = await verifyResponse.json();
+      console.log('验证密码 - 响应数据:', userData);
+
+      if (!userData || userData.length === 0) {
+        throw new Error('找不到用户数据');
+      }
+
+      if (userData[0].password !== currentPassword) {
         throw new Error('当前密码不正确');
       }
 
       // 更新密码
-      const { error: updateError } = await supabase
-        .from('users')
-        .update({
+      const updateUrl = `https://ptteznhpucxroxuebuix.supabase.co/rest/v1/users?id=eq.${user.id}`;
+
+      const updateResponse = await fetch(updateUrl, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
           password: newPassword,
           updated_at: new Date().toISOString()
         })
-        .eq('id', user.id);
+      });
 
-      if (updateError) throw updateError;
+      console.log('更新密码 - 响应状态:', updateResponse.status);
+
+      if (!updateResponse.ok) {
+        throw new Error(`更新密码失败: ${updateResponse.status} ${updateResponse.statusText}`);
+      }
 
       // 使用系统提示框显示成功消息
       showAlert({
@@ -2260,7 +2314,7 @@ const UserDashboard = () => {
                   alignItems: 'center',
                   height: '100%',
                   marginLeft: '10px',
-                  marginTop: '3px'
+                  marginTop: '0'
                 }}>
                   <label htmlFor="username" style={{
                     fontWeight: 500,
@@ -2275,18 +2329,19 @@ const UserDashboard = () => {
                   <input
                     type="text"
                     id="username"
+                    name="username"
                     value={usernameInput}
                     onChange={(e) => setUsernameInput(e.target.value)}
                     disabled={savingProfile}
+                    maxLength={30}
                     style={{
-                      height: '100%',
+                      height: '42px',
+                      width: '200px',
                       padding: '0 0.75rem',
                       border: '1px solid #d1d1d6',
                       borderRadius: '8px',
                       fontSize: '0.95rem',
-                      backgroundColor: '#f2f2f7',
-                      width: '200px',
-                      boxSizing: 'border-box'
+                      backgroundColor: '#ffffff'
                     }}
                   />
                 </div>
@@ -2296,7 +2351,7 @@ const UserDashboard = () => {
                   onClick={handleUpdateProfile}
                   disabled={savingProfile || !usernameInput.trim()}
                   style={{
-                    height: '100%',
+                    height: '42px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -2315,7 +2370,7 @@ const UserDashboard = () => {
                   <h4>修改密码</h4>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', height: '42px' }}>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span style={{ fontWeight: 500, color: '#3a3a3c', marginRight: '10px', fontSize: '0.95rem', width: '70px', textAlign: 'right', whiteSpace: 'nowrap' }}>当前密码</span>
                     <input
@@ -2328,7 +2383,7 @@ const UserDashboard = () => {
                       style={{
                         height: '42px',
                         width: '150px',
-                        padding: '0.75rem',
+                        padding: '0 0.75rem',
                         border: '1px solid #d1d1d6',
                         borderRadius: '8px',
                         fontSize: '0.95rem',
@@ -2349,7 +2404,7 @@ const UserDashboard = () => {
                       style={{
                         height: '42px',
                         width: '150px',
-                        padding: '0.75rem',
+                        padding: '0 0.75rem',
                         border: '1px solid #d1d1d6',
                         borderRadius: '8px',
                         fontSize: '0.95rem',
@@ -2370,7 +2425,7 @@ const UserDashboard = () => {
                       style={{
                         height: '42px',
                         width: '150px',
-                        padding: '0.75rem',
+                        padding: '0 0.75rem',
                         border: '1px solid #d1d1d6',
                         borderRadius: '8px',
                         fontSize: '0.95rem',
@@ -2389,8 +2444,8 @@ const UserDashboard = () => {
                       alignItems: 'center',
                       justifyContent: 'center',
                       padding: '0 1.5rem',
-                      marginTop: '0', /* 确保没有上边距 */
-                      verticalAlign: 'middle'
+                      marginLeft: '10px',
+                      marginTop: '0'
                     }}
                   >
                     {savingProfile ? '更新中...' : '更新'}
