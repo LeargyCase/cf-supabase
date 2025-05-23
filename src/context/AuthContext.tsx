@@ -2,8 +2,18 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // 从环境变量中获取Supabase配置
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// 验证环境变量
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing Supabase environment variables:', {
+    VITE_SUPABASE_URL: !!supabaseUrl,
+    VITE_SUPABASE_ANON_KEY: !!supabaseKey
+  });
+  throw new Error('Missing required Supabase environment variables. Please check your .env file or environment configuration.');
+}
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // 用户类型定义
@@ -170,4 +180,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+};

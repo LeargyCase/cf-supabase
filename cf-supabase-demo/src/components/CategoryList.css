@@ -1,0 +1,196 @@
+.category-list-container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 40px;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.category-list-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+  font-size: 28px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.error-message {
+  background-color: #ffeded;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+}
+
+.loading-indicator, .no-data-message {
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 使用auto-fit和minmax结合实现更好的填充 */
+  gap: 25px;
+  margin: 0 auto;
+  width: 100%;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.category-item {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  position: relative;
+  display: block;
+  width: 100%; /* 让项目填充网格单元格宽度 */
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 收藏放大状态 */
+.category-item.favorite-animation {
+  z-index: 50;
+}
+
+/* 收藏准备移动状态 */
+.category-item.favorite-prepare-move {
+  z-index: 50;
+}
+
+/* 收藏预移动状态 */
+.category-item.favorite-pre-move {
+  z-index: 40;
+}
+
+/* 收藏最终移动状态 - 用于平滑过渡到新位置 */
+.category-item.favorite-move {
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), 
+              opacity 0.6s ease-in-out;
+  z-index: 30;
+}
+
+/* 当卡片从悬浮状态移动到最终位置时，确保有平滑的过渡 */
+.category-item.favorite-move .category-card.favorite-pre-move, 
+.category-item.favorite-move .category-card {
+  transform: scale(1); /* 恢复到正常大小 */
+  transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1); /* 平滑的过渡效果 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 恢复到正常阴影 */
+}
+
+/* 为收藏的卡片腾出空间 - 使中间的卡片后移一格 */
+.category-item.make-space {
+  transform: translateX(calc(100% + 20px)); /* 向右移动一个卡片宽度+间距 */
+  transition: transform 0.45s cubic-bezier(0.2, 0.88, 0.4, 1.4); /* 更自然的过渡效果 */
+  opacity: 0.92; /* 轻微降低透明度 */
+  z-index: 15; /* 确保在适当的z轴层级 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 轻微阴影效果增强立体感 */
+  pointer-events: none; /* 在动画期间禁用交互 */
+}
+
+/* 为取消收藏的卡片腾出空间 - 使中间的卡片前移一格 */
+.category-item.close-space {
+  transform: translateX(calc(-100% - 20px)); /* 向左移动一个卡片宽度+间距 */
+  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1); /* 线性过渡替代弹性过渡 */
+  opacity: 0.92; /* 轻微降低透明度 */
+  z-index: 15; /* 确保在适当的z轴层级 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 轻微阴影效果增强立体感 */
+  pointer-events: none; /* 在动画期间禁用交互 */
+}
+
+/* 修复取消收藏时向左移动的卡片在最终位置调整时的二次冲击问题 */
+.category-item.close-space-end {
+  transform: translateX(calc(-100% - 20px)); /* 保持与close-space相同的位置 */
+  transition: none !important; /* 禁用第二次过渡动画 */
+  opacity: 0.92; /* 保持与close-space相同的透明度 */
+  z-index: 15; /* 保持与close-space相同的层级 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* 保持与close-space相同的阴影 */
+  pointer-events: none; /* 保持与close-space相同的交互设置 */
+}
+
+/* 响应式设计 - 为不同屏幕尺寸提供更好的自适应 */
+@media (max-width: 1200px) {
+  .category-list-container {
+    padding: 20px 30px;
+  }
+  
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自适应布局 */
+    gap: 20px;
+  }
+  
+  .category-item.make-space {
+    transform: translateX(calc(100% + 20px)); 
+  }
+  
+  .category-item.close-space {
+    transform: translateX(calc(-100% - 20px)); 
+    transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}
+
+@media (max-width: 768px) {
+  .category-list-container {
+    padding: 15px 20px;
+  }
+  
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 平板上更好的自适应 */
+    gap: 15px;
+  }
+  
+  .category-list-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .category-item.make-space {
+    transform: translateX(calc(100% + 15px));
+  }
+  
+  .category-item.close-space {
+    transform: translateX(calc(-100% - 15px));
+    transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}
+
+@media (max-width: 480px) {
+  .category-list-container {
+    padding: 10px 15px;
+  }
+  
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 手机上更适合的自适应 */
+    gap: 12px;
+  }
+  
+  .category-list-container h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  
+  .category-item.make-space {
+    transform: translateX(calc(100% + 12px));
+  }
+  
+  .category-item.close-space {
+    transform: translateX(calc(-100% - 12px));
+    transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+} 

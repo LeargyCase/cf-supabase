@@ -1,0 +1,245 @@
+.activation-code-management-container {
+  padding: 20px;
+  width: 100%;
+}
+
+.back-button {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+}
+
+.error-message {
+  background-color: #ffecec;
+  color: #d63031;
+  border: 1px solid #d63031;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-message button {
+  background: none;
+  border: none;
+  color: #d63031;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.activation-code-form {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.activation-code-form h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.submit-button:hover {
+  background-color: #3a5bd9;
+}
+
+.submit-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.code-action-buttons {
+  margin-bottom: 20px;
+}
+
+.export-button {
+  background-color: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.export-button:hover {
+  background-color: #38a169;
+}
+
+.export-button:disabled {
+  background-color: #9ae6b4;
+  cursor: not-allowed;
+}
+
+.activation-code-list {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.loading-message, .no-data-message {
+  text-align: center;
+  padding: 30px;
+  color: #718096;
+  font-size: 16px;
+}
+
+.code-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.code-table th, .code-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.code-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.code-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.code-table .inactive-code {
+  background-color: #f7fafc;
+  color: #a0aec0;
+}
+
+.code-table .used-code {
+  background-color: #e6fffa;
+  color: #38b2ac;
+}
+
+.status-button, .delete-button {
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-button {
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+.status-button:hover {
+  background-color: #e2e8f0;
+}
+
+.delete-button {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+.delete-button:hover {
+  background-color: #feb2b2;
+}
+
+.status-button:disabled, .delete-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 分页控件样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.pagination-button {
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-button:hover:not(:disabled) {
+  border-color: #cbd5e0;
+  background-color: #f8fafc;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #64748b;
+  font-size: 14px;
+}

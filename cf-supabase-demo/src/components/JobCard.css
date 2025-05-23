@@ -1,0 +1,296 @@
+/* 统一的工作卡片样式，基于PopupJobsView.css */
+.job-cards {
+  column-count: 3; /* 默认3列 */
+  column-gap: 20px;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  column-fill: balance;
+  transform: translateZ(0); /* 开启硬件加速 */
+  isolation: isolate;
+}
+
+.job-card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1); /* 增强默认阴影 */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important; /* 平滑过渡 */
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 280px !important; /* 设置最小高度确保一致性 */
+  width: 100%;
+  margin-bottom: 15px;
+  break-inside: avoid;
+  page-break-inside: avoid; /* 兼容旧浏览器 */
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  overflow: visible !important; /* 确保溢出内容可见 */
+  transform: translateZ(0); /* 启用硬件加速 */
+  -webkit-backface-visibility: hidden; /* 优化渲染 */
+  /* 关键属性：确保原高度保持不变，无论展开状态 */
+  contain: layout; /* 限制子元素影响布局 */
+  will-change: transform, box-shadow !important; /* 提前告知浏览器 */
+  touch-action: manipulation; /* 优化触摸体验 */
+}
+
+/* 确保悬停效果不被覆盖，使用高优先级选择器 */
+.job-cards .job-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.1) !important; /* 增强悬停阴影 */
+  transform: translateY(-6px) !important; /* 强制应用抬高效果 */
+  border-color: #d0d0d0 !important; /* 略微加深边框颜色增加立体感 */
+  z-index: 10 !important; /* 确保悬停时在其他卡片之上 */
+}
+
+/* 移除可能与悬停效果冲突的样式 */
+.job-card.collapsed:hover {
+  transform: translateY(-6px) !important; /* 覆盖可能的冲突规则 */
+}
+
+/* 确保展开卡片状态的样式不会被悬停效果覆盖 */
+.job-cards .job-card.expanded:hover {
+  transform: scale(1.05) !important; /* 保持展开效果 */
+}
+
+/* 为卡片增加额外的立体效果 */
+.job-card:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.job-card:hover:before {
+  opacity: 0;
+}
+
+.job-card.expanded {
+  position: relative !important;
+  z-index: 999 !important; /* 最高层级 */
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25), 0 8px 16px rgba(0, 0, 0, 0.1) !important; /* 更强的阴影 */
+  transform: scale(1.05) !important;
+  border: 1px solid #c0c0c0 !important;
+  border-radius: 8px 8px 0 0 !important;
+  border-bottom: none !important; /* 移除底部边框，使其与展开内容无缝连接 */
+  overflow: visible !important;
+  /* 使用contain属性确保子元素不影响布局 */
+  contain: layout style !important;
+  /* 确保展开卡片与周围元素隔离，不受影响 */
+  isolation: isolate;
+  will-change: transform, box-shadow !important; /* 优化动画性能 */
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
+
+.job-card-header {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.job-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.job-company {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.job-card-basic {
+  margin-bottom: 16px !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  flex: 1 1 auto !important; /* 让基本信息区域自动伸缩填充空间 */
+}
+
+.job-card-details {
+  background-color: white;
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+  padding-top: 12px;
+  padding-bottom: 8px;
+  border-top: 1px dashed #e0e0e0;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.job-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  font-size: 13px;
+  color: #000 !important;
+  margin-bottom: 4px;
+  font-weight: 700 !important;
+}
+
+.field-value {
+  font-size: 14px;
+  color: #333;
+}
+
+.job-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.job-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-detail-btn, .cancel-favorite-btn, .apply-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.view-detail-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.view-detail-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.cancel-favorite-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.cancel-favorite-btn:hover {
+  background-color: #ff5252;
+}
+
+.apply-button {
+  background-color: #ff9800;
+  color: white;
+  border-radius: 8px;
+}
+
+.apply-button:hover {
+  background-color: #e68a00;
+}
+
+/* 已投递标记 */
+.applied-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4caf50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) and (max-width: 991px) {
+  .job-cards {
+    column-count: 2; /* 平板上2列 */
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .job-cards {
+    column-count: 3; /* 默认3列 */
+  }
+}
+
+@media (min-width: 1200px) {
+  .job-cards {
+    column-count: 3; /* 大屏幕也是3列 */
+  }
+}
+
+@media (max-width: 576px) {
+  .job-cards {
+    column-count: 1; /* 手机上1列 */
+  }
+
+  .job-card-basic {
+    gap: 8px;
+  }
+
+  .field-label, .field-value {
+    font-size: 13px;
+  }
+
+  .job-card-footer {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .view-detail-btn, .cancel-favorite-btn, .apply-button {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* 减轻移动设备的动画效果，提高性能 */
+  .job-cards .job-card:hover {
+    transform: translateY(-3px) !important; /* 减小移动端效果 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important; /* 简化阴影 */
+  }
+}
+
+/* 卡片触摸反馈效果 */
+.job-cards .job-card:active {
+  transform: translateY(-2px) scale(0.98) !important; /* 轻微下压+缩小效果 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important; /* 略微减弱阴影 */
+  transition: all 0.1s ease-in-out !important; /* 更快的反馈过渡 */
+}
+
+/* 确保展开卡片不受触摸反馈影响 */
+.job-cards .job-card.expanded:active {
+  transform: scale(1.03) translateY(2px) !important; /* 略微缩小并下压 */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important; /* 减弱阴影 */
+  transition: all 0.1s ease-in-out !important; /* 更快的反馈过渡 */
+  cursor: pointer;
+}
+
+/* 已投递图标样式 */
+.delivered-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  display: inline-block;
+}

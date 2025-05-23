@@ -1,0 +1,807 @@
+.job-form-container {
+  margin-bottom: 2rem;
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+  overflow-x: hidden; /* 防止水平溢出 */
+}
+
+.form-header {
+  margin-bottom: 1rem;
+  position: relative;
+  padding-top: 0;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.back-button {
+  margin: 0;
+  padding: 0.3rem 0.6rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  color: #475569;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+  position: relative;
+  left: 0;
+  top: 0;
+  margin-bottom: 10px;
+  z-index: 10;
+}
+
+.back-button:hover {
+  background-color: #f1f5f9;
+  transform: translateX(-2px);
+}
+
+.form-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  padding-left: 0;
+  margin-top: 0;
+  width: 100%;
+}
+
+.form-heading {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-heading h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #334155;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.top-row .form-group label {
+  margin-bottom: 5px;
+  display: block;
+  width: auto;
+  min-width: 100px;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.input-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.checkbox-item label {
+  display: inline-block;
+  width: auto;
+  text-align: left;
+  margin-right: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* 禁用标签的点击事件，让点击穿透到父元素 */
+}
+
+.required {
+  color: #ef4444;
+  margin-left: 0.25rem;
+  font-size: 0.85rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  background-color: #f8fafc;
+}
+
+input[type="date"] {
+  width: 160px !important; /* 缩短日期输入框宽度，使用!important确保优先级 */
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  background-color: #f8fafc;
+  max-width: 160px; /* 添加最大宽度限制 */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+input[type="text"].error,
+input[type="number"].error,
+input[type="date"].error,
+input[type="url"].error,
+textarea.error,
+select.error {
+  border-color: #ef4444;
+}
+
+input[type="text"].error:focus,
+input[type="number"].error:focus,
+input[type="date"].error:focus,
+input[type="url"].error:focus,
+textarea.error:focus,
+select.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.error-message {
+  display: none; /* 隐藏错误消息 */
+}
+
+.input-wrapper .error-message {
+  display: none; /* 隐藏错误消息 */
+}
+
+.form-group {
+  position: relative;
+  padding-bottom: 1.2rem;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.form-group.full-width .error-message {
+  display: none; /* 隐藏错误消息 */
+}
+
+.job-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  min-width: 0;
+}
+
+/* 覆盖日期输入框的宽度 */
+.form-group input[type="date"] {
+  width: 160px;
+}
+
+/* 移除这个规则，因为已经在上面定义了 */
+
+/* 让特定的表单组占据整行 */
+.form-group:nth-child(3), /* 分类 */
+.form-group:nth-child(6), /* 招聘对象 */
+.form-group:nth-child(9), /* 表单操作按钮 */
+.form-actions {
+  grid-column: 1 / -1;
+}
+
+/* 特殊表单组的垂直布局 */
+.form-group.full-width {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group.full-width label {
+  width: auto;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.form-group.full-width textarea,
+.form-group.full-width .categories-section,
+.form-group.full-width .graduation-year-checkboxes {
+  width: 100%;
+  margin-left: 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  align-items: flex-start;
+  flex-wrap: wrap; /* 允许在需要时换行 */
+}
+
+.form-row .form-group {
+  flex: 0 0 auto; /* 不伸缩，保持自身大小 */
+  margin-bottom: 0;
+  margin-right: 1rem; /* 减少右侧间距 */
+}
+
+/* 日期和位置行样式 - 强制水平排列 */
+.date-location-row {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.date-location-row .form-group {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+.date-location-row .date-group {
+  min-width: 200px !important;
+  max-width: 200px !important;
+}
+
+.date-location-row .location-group {
+  flex: 0.8 !important;
+  min-width: 200px !important;
+}
+
+/* 特殊行样式 */
+.top-row {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap; /* 允许在需要时换行 */
+  justify-content: flex-start; /* 左对齐 */
+}
+
+/* 招聘信息标题输入框宽度 */
+.title-group {
+  flex: 0 0 auto;
+  width: 600px;
+  min-width: 200px;
+  padding-right: 10px;
+}
+
+/* 招聘公司输入框宽度 */
+.company-group {
+  flex: 0 0 auto;
+  width: 20%;
+  min-width: 140px;
+  padding-right: 10px;
+}
+
+/* 公司描述输入框宽度 */
+.description-group {
+  flex: 0 0 auto;
+  width: 25%;
+  min-width: 160px;
+}
+
+.form-column {
+  flex: 1;
+}
+
+.form-column-full {
+  width: 100%;
+}
+
+.categories-section {
+  display: grid;
+  grid-template-columns: 1fr; /* 改为单列布局在小屏幕上 */
+  gap: 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.category-group h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: #475569;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  justify-content: flex-start; /* 左对齐 */
+}
+
+.other-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* 自适应网格 */
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.graduation-year-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  margin-left: 100px !important; /* 增加左边距并添加!important确保优先级 */
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox-item {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  font-size: 0.9rem;
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+  width: 100px; /* 减小宽度 */
+  min-height: 40px; /* 减小高度 */
+  height: 40px;
+  position: relative;
+  transform: translateZ(0); /* 创建新的层叠上下文 */
+  overflow: hidden;
+  margin: 0;
+}
+
+.checkbox-text {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.8rem 1.2rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  left: -9999px; /* 移出视图 */
+}
+
+.checkbox-item:hover {
+  background-color: #e2e8f0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-item.selected {
+  background-color: #dbeafe;
+  border-color: #3b82f6;
+  color: #1e40af;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.checkbox-item.selected .checkbox-text {
+  color: #1e40af;
+  font-weight: 500;
+}
+
+.checkbox-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox-item.error {
+  border-color: #ef4444;
+}
+
+/* 修改状态选择器样式 */
+.status-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.status-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  width: auto;
+  min-width: 120px;
+  margin-left: 0;
+}
+
+.status-checkbox input[type="checkbox"] {
+  position: relative;
+  opacity: 1;
+  width: auto;
+  height: auto;
+  left: auto;
+  margin-right: 8px;
+}
+
+.status-checkbox .checkbox-text {
+  position: relative;
+  display: inline;
+  padding: 0;
+}
+
+.dropdown-select {
+  cursor: pointer;
+}
+
+.dates-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.dates-group .form-field {
+  flex: 1;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.submit-button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 150px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #e2e8f0;
+}
+
+.loading-indicator {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.help-text {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.375rem;
+}
+
+/* 在较大屏幕上使用两列布局 */
+@media (min-width: 768px) {
+  .categories-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 添加通用响应式布局规则 */
+@media (max-width: 1200px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-row .form-group {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .date-location-row {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .date-location-row .form-group {
+    width: auto !important;
+  }
+
+  .form-row:has(.position-group),
+  .form-row:has(.major-group) {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .top-row {
+    flex-direction: column;
+  }
+
+  .title-group,
+  .company-group,
+  .description-group {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 1201px) {
+  /* 在大屏幕上保持水平布局 */
+  .form-row {
+    flex-direction: row;
+  }
+
+  .form-row .form-group {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .top-row .form-group {
+    min-width: 0;
+  }
+
+  /* 大屏幕上的工作地点和招聘岗位可以一行显示 */
+  .form-row .form-group:not(.date-group) {
+    flex: 1;
+  }
+}
+
+/* 确保日期输入框在所有屏幕尺寸下都有合适的显示 */
+.date-input {
+  width: 180px !important;
+  max-width: 180px !important;
+}
+
+/* 修改表单组间距，更加紧凑 */
+.form-group {
+  margin-bottom: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+
+/* 确保错误信息不会破坏布局 */
+.error-message {
+  display: none; /* 隐藏错误消息 */
+}
+
+/* 确保输入框有足够高度以便于输入 */
+input[type="text"],
+input[type="url"],
+select {
+  height: 38px;
+}
+
+/* 添加表单底部提交按钮的样式 */
+.submit-button {
+  min-width: 150px;
+  margin: 0 auto;
+}
+
+/* 工作地点、招聘岗位等字段的特定样式 */
+.form-row:has([name="job_location"]),
+.form-row:has([name="job_position"]),
+.form-row:has([name="job_major"]),
+.form-row:has([name="job_education_requirement"]),
+.form-row:has([name="application_link"]) {
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .form-row:has([name="job_location"]) .form-group,
+  .form-row:has([name="job_position"]) .form-group,
+  .form-row:has([name="job_major"]) .form-group {
+    width: 48%;
+    flex: 0 0 48%;
+  }
+}
+
+/* 添加截止日期和发布日期的限制 */
+.form-row:has([name="post_time"]),
+.form-row:has([name="deadline"]) {
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .form-row:has([name="post_time"]) .form-group,
+  .form-row:has([name="deadline"]) .form-group {
+    width: auto;
+    min-width: auto;
+    flex: 0 0 auto;
+  }
+}
+
+/* 3. 调整招聘岗位和专业行布局 */
+.form-row .position-group,
+.form-row .major-group {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+/* 招聘岗位和专业行特定样式 */
+.position-major-row {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.position-major-row .form-group {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+/* 重要的布局覆盖规则 - 确保同一行显示 */
+.date-location-row,
+.position-major-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+}
+
+@media (max-width: 1200px) {
+  .date-location-row,
+  .position-major-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .date-location-row .form-group,
+  .position-major-row .form-group {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  /* 确保日期输入框在移动端适当大小 */
+  .date-location-row .date-group {
+    flex: 0 0 auto !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+  }
+}
+
+/* 用户管理页面输入框横向排列 */
+.user-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.user-form-row .form-group {
+  flex: 0 0 30%; /* 设置每个输入框占30%的宽度 */
+  max-width: 30%;
+  margin-right: 0;
+}
+
+.user-form-row input[type="text"],
+.user-form-row input[type="password"] {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 调整添加用户按钮的位置 */
+.user-management-form .form-buttons {
+  margin-top: 0.5rem; /* 减少上方空白 */
+}
+
+.user-management-form .checkbox-group {
+  margin-bottom: 0.5rem; /* 减少下方空白 */
+  padding-bottom: 0;
+}
+
+/* 激活码管理页面输入框横向排列 */
+.activation-code-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.activation-code-row .form-group {
+  flex: 1; /* 均匀分配宽度 */
+  max-width: 33%;
+  margin-right: 0;
+}
+
+.activation-code-row input[type="text"],
+.activation-code-row input[type="number"] {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 调整生成激活码按钮的位置 */
+.activation-code-form .form-buttons {
+  margin-top: 0.5rem; /* 减少上方空白 */
+}

@@ -1,0 +1,310 @@
+/* 用户个人中心容器 */
+.user-profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* 头部样式 */
+.user-profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-profile-header h2 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.welcome-text {
+  font-size: 16px;
+  margin: 0;
+}
+
+.logout-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+/* 标签页样式 */
+.user-actions-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+}
+
+.tab:hover {
+  background-color: #f9f9f9;
+}
+
+.tab.active {
+  border-bottom-color: #3498db;
+  color: #3498db;
+}
+
+/* 内容区域样式 */
+.user-actions-content {
+  min-height: 400px;
+}
+
+/* 加载提示 */
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  color: #666;
+}
+
+/* 空列表提示 */
+.empty-list {
+  text-align: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  color: #888;
+}
+
+/* 工作列表 */
+.job-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* 工作项 */
+.job-item {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.job-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 工作项展开/折叠状态 */
+.job-item.collapsed .job-details .job-field.full-width,
+.job-item.collapsed .job-details .job-field:nth-child(n+4) {
+  display: none;
+}
+
+.job-item.expanded {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.job-item.expanded .job-details {
+  padding-bottom: 20px;
+}
+
+/* 工作项头部 */
+.job-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+
+.job-title {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  padding-right: 30px; /* 为取消按钮或标签留出空间 */
+}
+
+.job-company {
+  display: block;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+/* 取消按钮 */
+.cancel-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #e74c3c;
+  cursor: pointer;
+  opacity: 0.7;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.cancel-button:hover {
+  opacity: 1;
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* 已投递标签 */
+.applied-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #27ae60;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 工作详情 */
+.job-details {
+  padding: 15px;
+}
+
+.job-field {
+  margin-bottom: 8px;
+  display: flex;
+  font-size: 14px;
+}
+
+.job-field.full-width {
+  display: block;
+  margin-top: 15px;
+}
+
+.field-label {
+  width: 80px;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.field-value {
+  color: #2c3e50;
+  flex: 1;
+}
+
+.field-value.description {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+/* 操作区域 */
+.job-actions {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.apply-button, .view-button, .detail-button {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.apply-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.apply-button:hover {
+  background-color: #2980b9;
+}
+
+.view-button {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  border: 1px solid #ddd;
+}
+
+.view-button:hover {
+  background-color: #e9ecef;
+}
+
+.detail-button {
+  background-color: #f1f1f1;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.detail-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 登录提示 */
+.login-message {
+  text-align: center;
+  padding: 50px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.login-message h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.login-message p {
+  color: #7f8c8d;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .job-list {
+    grid-template-columns: 1fr;
+  }
+
+  .user-profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .user-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+} 

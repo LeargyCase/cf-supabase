@@ -1,0 +1,624 @@
+.job-table-container {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.all-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.search-input {
+  padding: 0 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  min-width: 240px;
+  height: 38px;
+  box-sizing: border-box;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* 统一所有操作按钮样式 */
+.action-button {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.search-button {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #2563eb;
+}
+
+.search-button:hover {
+  background-color: #2563eb;
+}
+
+.add-button {
+  background-color: #4a6cf7;
+  color: white;
+  border-color: #3a5bd9;
+}
+
+.add-button:hover {
+  background-color: #3a5bd9;
+}
+
+.import-button {
+  background-color: #10b981;
+  color: white;
+  border-color: #059669;
+}
+
+.import-button:hover {
+  background-color: #059669;
+}
+
+.refresh-button {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.refresh-button:hover {
+  background-color: #e2e8f0;
+}
+
+.clear-search-button {
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.clear-search-button:hover {
+  background-color: #e2e8f0;
+}
+
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.table-info {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.table-responsive {
+  position: relative;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.job-table {
+  width: 100%;
+  table-layout: auto !important; /* 使用自动布局而不是固定布局 */
+  border-collapse: separate !important; /* 分离边框，支持调整列宽 */
+  border-spacing: 0;
+  font-size: 0.95rem;
+}
+
+/* 冻结列样式 - 使用更强力的设置 */
+.job-table th:first-child,
+.job-table td:first-child,
+.job-table .action-column,
+.job-table tr td:first-of-type {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 20 !important;
+  background-color: #f8fafc !important;
+  box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1) !important;
+  border-right: 2px solid #e2e8f0 !important; /* 加粗右边框增加视觉分隔 */
+  width: 235px !important;
+  min-width: 235px !important;
+  max-width: 235px !important;
+}
+
+/* 第二列 - 招聘信息标题列 */
+.job-table th:nth-child(2),
+.job-table td:nth-child(2) {
+  min-width: 250px !important;
+  max-width: none !important; /* 移除最大宽度限制 */
+  width: auto !important; /* 允许自动调整宽度 */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  position: sticky !important;
+  left: 235px !important;
+  background-color: #f8fafc !important;
+  z-index: 49 !important;
+  box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1) !important;
+  border-right: 2px solid #e2e8f0 !important;
+  padding-left: 8px !important;
+  box-sizing: border-box !important;
+}
+
+/* 第三列 - 招聘对象列（完全取消冻结） */
+.job-table th:nth-child(3),
+.job-table td:nth-child(3) {
+  min-width: 150px !important;
+  width: auto !important; /* 自适应宽度 */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  padding-left: 8px !important;
+  box-sizing: border-box !important;
+  position: static !important; /* 确保不会被固定 */
+  left: auto !important; /* 移除左侧定位 */
+  z-index: 1 !important; /* 降低z-index */
+  background-color: inherit !important; /* 继承背景色 */
+}
+
+/* 第四列 - 地点列 */
+.job-table th:nth-child(4),
+.job-table td:nth-child(4) {
+  min-width: 120px !important;
+  width: 120px !important; /* 固定宽度，防止变形 */
+  max-width: 120px !important; /* 确保最大宽度也固定 */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important; /* 强制不换行 */
+  box-sizing: border-box !important;
+  /* 移除display: block，它会破坏表格结构 */
+}
+
+/* 创建一个强力的分隔线 */
+.column-divider {
+  position: fixed !important;
+  top: 0 !important;
+  height: 100% !important;
+  width: 3px !important;
+  background-color: #cbd5e1 !important;
+  z-index: 100 !important;
+  pointer-events: none !important;
+}
+
+/* 悬停时保持冻结列的背景色 */
+.job-table tbody tr:hover td:first-child,
+.job-table tbody tr:hover td:nth-child(1),
+.job-table tbody tr:hover .action-column {
+  background-color: #f1f5f9 !important;
+}
+
+.job-table tbody tr:hover td:nth-child(2) {
+  background-color: #f1f5f9 !important;
+}
+
+/* 第三列不再是冻结列，但保留悬停效果以保持一致性 */
+.job-table tbody tr:hover td:nth-child(3) {
+  background-color: transparent !important;
+}
+
+.job-table th,
+.job-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 非冻结列自适应宽度 */
+.job-table th:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)),
+.job-table td:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)) {
+  min-width: 120px;
+  max-width: none;
+  width: auto;
+}
+
+/* 招聘专业列 - 允许更宽的内容显示 */
+.job-table th:nth-child(5),
+.job-table td:nth-child(5) {
+  min-width: 200px;
+  white-space: normal;
+  word-wrap: break-word;
+  max-height: 60px;
+  overflow: visible;
+}
+
+/* 工作地点列后的其他列 */
+.job-table th:nth-child(n+6),
+.job-table td:nth-child(n+6) {
+  min-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 调整表格表头样式，确保可以正常拖拽 */
+.job-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  user-select: none;
+  white-space: nowrap;
+  position: relative !important;
+  overflow: visible !important; /* 确保可见溢出内容，支持调整列宽 */
+  min-width: 40px; /* 设置最小宽度 */
+  box-sizing: border-box;
+  border-right: 1px solid #e2e8f0;
+  cursor: default; /* 默认光标为普通光标 */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-right: 12px !important; /* 为拖拽手柄预留空间 */
+}
+
+/* 增强表头拖拽调整宽度的样式 */
+.job-table th::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px; /* 增加拖拽区域宽度 */
+  height: 100%;
+  background-color: transparent;
+  cursor: col-resize;
+  z-index: 1000;
+  pointer-events: auto !important; /* 确保可以接收鼠标事件 */
+}
+
+.job-table th:hover::after {
+  background-color: rgba(0, 0, 0, 0.1); /* 改为透明灰色 */
+}
+
+/* 专门为resize-handle元素设置样式 */
+.resize-handle {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 8px !important;
+  height: 100% !important;
+  cursor: col-resize !important;
+  background-color: transparent !important;
+  z-index: 1000 !important;
+  pointer-events: auto !important;
+}
+
+.resize-handle:hover, .resize-handle.active {
+  background-color: rgba(0, 0, 0, 0.2) !important; /* 更明显的颜色 */
+}
+
+/* 删除全局调整指示线样式 */
+#resize-indicator {
+  display: none; /* 隐藏蓝色指示线 */
+}
+
+.job-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.job-table .inactive-row {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.job-table .inactive-row:hover {
+  background-color: #e2e8f0;
+}
+
+.title-cell {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions-column, .action-column {
+  width: 235px !important;
+  min-width: 235px !important;
+  max-width: 235px !important;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+/* 为表头中的操作列添加固定宽度 */
+.job-table th:first-child {
+  width: 235px !important;
+  min-width: 235px !important;
+  max-width: 235px !important;
+}
+
+.actions-cell, .action-column {
+  white-space: nowrap;
+  text-align: left !important;
+  display: flex !important;
+  gap: 15px !important; /* 增加间距 */
+  align-items: center !important;
+  justify-content: flex-start !important; /* 左对齐 */
+  padding-left: 10px !important; /* 添加左侧内边距 */
+  min-width: 235px !important; /* 确保有足够的空间 */
+}
+
+.edit-button,
+.delete-button {
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0 0.25rem;
+}
+
+.edit-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #2563eb;
+}
+
+.delete-button {
+  background-color: #ef4444;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #dc2626;
+}
+
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #64748b;
+}
+
+.no-data-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #64748b;
+  background-color: #f8fafc;
+  border-radius: 4px;
+  border: 1px dashed #cbd5e1;
+}
+
+.status-indicator {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-indicator.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-indicator.inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.pagination-button {
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #e2e8f0;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  margin: 0 0.5rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* 爱心按钮样式 */
+.favorite-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.favorite-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.favorite-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s;
+  font-size: 20px;
+}
+
+.favorite-icon::before {
+  content: '♡';
+}
+
+.favorite-icon.active::before {
+  content: '❤';
+  color: #ff5252;
+}
+
+/* 投递按钮样式 */
+.apply-button {
+  background-color: #ff9800; /* 橙色 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 90px;
+  text-align: center;
+  white-space: nowrap;
+  outline: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.apply-button:focus {
+  outline: none;
+}
+
+.apply-button:hover {
+  background-color: #e68a00; /* 深一点的橙色 */
+}
+
+.apply-button.applied {
+  background-color: #1a73e8; /* 蓝色 */
+  color: white;
+}
+
+.apply-button.applied:hover {
+  background-color: #0d62d1; /* 深一点的蓝色 */
+}
+
+/* 统计数据样式 */
+.stat-value {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-icon {
+  font-size: 14px;
+}
+
+.views-icon::before {
+  content: '👁️';
+}
+
+.favs-icon::before {
+  content: '★';
+  font-size: 12px;
+}
+
+.apps-icon::before {
+  content: '📝';
+}
+
+/* 确保操作列固定 - 这是最终的样式定义，优先级最高 */
+.action-column,
+.job-table th:first-child,
+.job-table td:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  width: 235px !important;
+  min-width: 235px !important;
+  max-width: 235px !important;
+  z-index: 50 !important;
+  background-color: #f8fafc !important;
+  box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1) !important;
+  border-right: 2px solid #e2e8f0 !important;
+}

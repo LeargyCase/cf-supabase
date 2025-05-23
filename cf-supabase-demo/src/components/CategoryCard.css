@@ -1,0 +1,303 @@
+.category-card {
+  display: block;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  height: 320px;
+  width: 100%; /* 确保卡片填充容器宽度 */
+  cursor: pointer;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none; /* Safari 浏览器支持 */
+  -moz-user-select: none; /* Firefox 浏览器支持 */
+  -ms-user-select: none; /* IE/Edge 浏览器支持 */
+  box-sizing: border-box; /* 确保padding和border不会增加总宽度 */
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 添加点击下压的动画效果 */
+.category-card:active {
+  transform: translateY(3px) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.category-card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.count-number {
+  font-size: 100px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 25px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  text-align: center;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.category-name {
+  font-size: 22px;
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  text-align: center;
+  user-select: none; /* 禁止文本选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #ccc;
+  padding: 8px;
+  transition: all 0.2s ease;
+  outline: none;
+  z-index: 5;
+  text-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+}
+
+.favorite-button:hover {
+  transform: scale(1.2);
+}
+
+.favorite-button.favorited {
+  color: #ffcc00;
+  border: none;
+  outline: none;
+  text-shadow: 0 0 0 transparent;
+  box-shadow: none;
+}
+
+.favorite-button:focus,
+.favorite-button:active {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+/* 特殊卡片样式 */
+.special-category {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 卡片颜色定义 - 更鲜明的iOS风格 */
+.category-1 { background: linear-gradient(135deg, #e0f0ff 0%, #c1e0ff 100%); } /* 国企 */
+.category-1 .count-number { color: #0055d4; }
+
+.category-2 { background: linear-gradient(135deg, #e8f8ff 0%, #b7e8ff 100%); } /* 外企 */
+.category-2 .count-number { color: #0077cc; }
+
+.category-3 { background: linear-gradient(135deg, #f0f0f6 0%, #dcdce6 100%); } /* 事业单位 */
+.category-3 .count-number { color: #5c5c6d; }
+
+.category-4 { background: linear-gradient(135deg, #e0ffe0 0%, #c1f8c1 100%); } /* 银行/金融 */
+.category-4 .count-number { color: #26a826; }
+
+.category-5 { background: linear-gradient(135deg, #d8eaff 0%, #b6d7fa 100%); } /* 互联网 */
+.category-5 .count-number { color: #0066cc; }
+
+.category-6 { background: linear-gradient(135deg, #ebe6ff 0%, #d1c6ff 100%); } /* 制造业 */
+.category-6 .count-number { color: #5840cb; }
+
+.category-7 { background: linear-gradient(135deg, #ffeee0 0%, #ffddc3 100%); } /* 游戏 */
+.category-7 .count-number { color: #e67700; }
+
+.category-8 { background: linear-gradient(135deg, #f2e6ff 0%, #e2c6ff 100%); } /* 快消/品牌 */
+.category-8 .count-number { color: #8000cc; }
+
+.category-9 { background: linear-gradient(135deg, #e0fafa 0%, #bbe9e9 100%); } /* 生物医药 */
+.category-9 .count-number { color: #009e9e; }
+
+.category-10 { background: linear-gradient(135deg, #e6eef0 0%, #c5d7dc 100%); } /* 汽车/新能源 */
+.category-10 .count-number { color: #445e69; }
+
+.category-11 { background: linear-gradient(135deg, #d6ecff 0%, #b8dfff 100%); } /* 科技 */
+.category-11 .count-number { color: #0066cc; }
+
+.category-12 { background: linear-gradient(135deg, #ffe6ec 0%, #ffc1d1 100%); } /* 美妆 */
+.category-12 .count-number { color: #e6194b; }
+
+.category-13 { background: linear-gradient(135deg, #fff6e0 0%, #ffe9b6 100%); } /* 传媒 */
+.category-13 .count-number { color: #cc7700; }
+
+.category-14 { background: linear-gradient(135deg, #d9f5e6 0%, #b6ebd0 100%); } /* 一线大厂 */
+.category-14 .count-number { color: #00994d; }
+
+.category-15 { background: linear-gradient(135deg, #f2e0ff 0%, #e2c0ff 100%); } /* 小而美 */
+.category-15 .count-number { color: #8800cc; }
+
+.category-16 { background: linear-gradient(135deg, #fff0d9 0%, #ffdca6 100%); } /* 教育 */
+.category-16 .count-number { color: #cc7700; }
+
+.category-17 { background: linear-gradient(135deg, #f4f7d9 0%, #e8eda3 100%); } /* 地产/建筑 */
+.category-17 .count-number { color: #737a22; }
+
+.category-18 { background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%); } /* 其他 */
+.category-18 .count-number { color: #666666; }
+
+/* 特殊分类样式 */
+.category-19 {
+  background: linear-gradient(135deg, #d6e9ff 0%, #abccfe 100%);
+}
+.category-19 .count-number { color: #0055d4; font-weight: 800; }
+
+.category-20 {
+  background: linear-gradient(135deg, #f0e0ff 0%, #d9b8ff 100%);
+}
+.category-20 .count-number { color: #8800cc; font-weight: 800; }
+
+/* 卡片拖拽时的过渡动画 */
+.category-card-transition {
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 收藏时的动画类 */
+.category-card.favorite-animation {
+  z-index: 50;
+  transform: scale(1.5);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+}
+
+/* 收藏卡片准备移动状态 */
+.category-card.favorite-animation.favorite-prepare-move {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+/* 收藏卡片预移动状态 - 保持放大但准备移动 */
+.category-card.favorite-pre-move {
+  transform: scale(1.2);
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+  z-index: 50;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.favorite-move {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .category-card {
+    height: 280px;
+  }
+
+  .count-number {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+
+  .category-name {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-card {
+    height: 220px;
+  }
+
+  .count-number {
+    font-size: 60px;
+    margin-bottom: 15px;
+  }
+
+  .category-name {
+    font-size: 15px;
+  }
+}
+
+.category-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #3498db;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-count {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+.count-label {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.default-icon::before {
+  content: '🏢';
+}
+
+/* 自定义分类图标 */
+.icon-enterprise::before { content: '🏢'; }       /* 国企 */
+.icon-foreign::before { content: '🌏'; }          /* 外企 */
+.icon-institution::before { content: '🏛️'; }      /* 事业单位 */
+.icon-finance::before { content: '💰'; }          /* 银行/金融 */
+.icon-internet::before { content: '💻'; }         /* 互联网 */
+.icon-manufacture::before { content: '🏭'; }      /* 制造业 */
+.icon-game::before { content: '🎮'; }             /* 游戏 */
+.icon-fmcg::before { content: '🛒'; }             /* 快消/品牌 */
+.icon-biomedical::before { content: '💊'; }       /* 生物医药 */
+.icon-automotive::before { content: '🚗'; }       /* 汽车/新能源 */
+.icon-tech::before { content: '🔬'; }             /* 科技 */
+.icon-beauty::before { content: '💄'; }           /* 美妆 */
+.icon-media::before { content: '📱'; }            /* 传媒 */
+.icon-top-company::before { content: '🌟'; }      /* 一线大厂 */
+.icon-small-beauty::before { content: '✨'; }     /* 小而美 */
+.icon-education::before { content: '🎓'; }        /* 教育 */
+.icon-real-estate::before { content: '🏗️'; }      /* 地产/建筑 */
+.icon-other::before { content: '📦'; }            /* 其他 */
+.icon-new::before { content: '🆕'; }              /* 24h新开 */
+.icon-previous::before { content: '👨‍🎓'; }        /* 往届可投 */

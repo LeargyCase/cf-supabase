@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>求职系统</title>
+  <style>
+    /* 动态列宽调整CSS */
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100%;
+      cursor: col-resize;
+      background-color: transparent;
+      z-index: 1000;
+    }
+    .resize-handle:hover, .resize-handle.active {
+      background-color: rgba(0, 0, 0, 0.1); /* 将蓝色指示线改为浅灰色 */
+    }
+  </style>
+  <script>
+    // 表格列宽调整功能
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化函数将在页面加载后自动调用
+      setTimeout(initResizableTable, 500);
+      // 当窗口大小改变时重新初始化
+      window.addEventListener('resize', function() {
+        setTimeout(initResizableTable, 100);
+      });
+    });
+
+    function initResizableTable() {
+      const tables = document.querySelectorAll('.job-table');
+      
+      tables.forEach(table => {
+        // 移除旧的resize handles
+        const oldHandles = table.querySelectorAll('.resize-handle');
+        oldHandles.forEach(handle => handle.remove());
+        
+        // 获取表头
+        const thElements = table.querySelectorAll('th');
+        
+        // 为每个表头添加resize handle
+        thElements.forEach((th, index) => {
+          // 操作列不应该可调整大小 - 固定为235px
+          if (index === 0 || th.classList.contains('action-column') || th.innerText === "操作") {
+            th.style.width = "235px";
+            th.style.minWidth = "235px";
+            th.style.maxWidth = "235px";
+            return; // 跳过操作列，不添加调整大小的控件
+          }
+          
+          // 保存width属性
+          const width = th.style.width;
+          if (width) {
+            th.dataset.initialWidth = width;
+          }
+          
+          // 创建resize handle
+          const handle = document.createElement('div');
+          handle.className = 'resize-handle';
+          th.style.position = 'relative'; // 确保可以使用绝对定位
+          th.appendChild(handle);
+          
+          let startX, startWidth, tableWidth, columnIndex;
+          
+          handle.addEventListener('mousedown', function(e) {
+            startX = e.pageX;
+            
+            // 获取当前列的宽度
+            startWidth = th.offsetWidth;
+            tableWidth = table.offsetWidth;
+            
+            // 获取当前列的索引
+            columnIndex = Array.from(thElements).indexOf(th);
+            
+            handle.classList.add('active');
+            
+            // 添加移动和松开事件监听
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+            
+            // 阻止默认行为和事件冒泡
+            e.preventDefault();
+            e.stopPropagation();
+          });
+          
+          function onMouseMove(e) {
+            const diffX = e.pageX - startX;
+            
+            // 计算新的宽度（最小宽度为50px）
+            const newWidth = Math.max(50, startWidth + diffX);
+            
+            // 设置列宽
+            th.style.width = newWidth + 'px';
+            th.style.minWidth = newWidth + 'px';
+            
+            // 阻止默认行为
+            e.preventDefault();
+          }
+          
+          function onMouseUp() {
+            handle.classList.remove('active');
+            
+            // 移除移动和松开事件监听
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+          }
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html> 

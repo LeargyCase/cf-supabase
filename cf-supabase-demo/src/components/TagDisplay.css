@@ -1,0 +1,134 @@
+.tag-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 5px !important;
+  margin: 0 !important;
+  min-height: 26px !important;
+}
+
+.time-tag, .action-tag, .company-desc-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  white-space: nowrap !important;
+  animation: fadeIn 0.3s ease-in-out !important;
+  z-index: 20 !important;
+  min-width: 65px !important;
+  text-align: center !important;
+  justify-content: center !important;
+  max-width: 200px !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.time-tag {
+  /* 移除之前的border-radius规则，使用通用规则 */
+}
+
+.action-tag {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.action-tag::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateX(-100%) !important;
+  transition: transform 0.5s ease !important;
+}
+
+.action-tag:hover::before {
+  transform: translateX(0) !important;
+}
+
+.action-tag-icon {
+  margin-right: 4px !important;
+  font-size: 12px !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .time-tag, .action-tag {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+  
+  .action-tag-icon {
+    margin-right: 3px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 悬停效果 - 移除抬高动作但保留阴影效果 */
+.time-tag:hover, .action-tag:hover {
+  /* 移除transform属性，不再抬高 */
+  /* transform: translateY(-2px) !important; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* 公司描述标签样式 */
+.company-desc-tag {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+  color: white !important;
+  letter-spacing: 0.3px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 3px 10px !important;
+  margin-right: 2px !important; /* 增加右侧间距 */
+}
+
+/* 公司描述标签波浪动画 */
+.company-desc-tag::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0), 
+    rgba(255, 255, 255, 0.3), 
+    rgba(255, 255, 255, 0)
+  ) !important;
+  width: 100% !important;
+  transform: translateX(-100%) !important;
+  animation: wave 2s infinite ease-in-out !important;
+  pointer-events: none !important;
+  z-index: 2 !important; /* 确保波浪在标签内容之下 */
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.company-desc-tag:hover::before {
+  transform: translateX(100%) !important;
+} 

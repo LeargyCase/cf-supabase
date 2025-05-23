@@ -1,0 +1,166 @@
+/* 招聘信息管理页面专用表格样式 */
+.job-management-table-container {
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.job-management-table-responsive {
+  position: relative;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.job-management-table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.job-management-table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.job-management-table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.job-management-table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.job-management-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.95rem;
+  table-layout: auto; /* 使用自动布局而不是固定布局 */
+}
+
+.job-management-table th,
+.job-management-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 非冻结列自适应宽度 */
+.job-management-table th:not(:first-child),
+.job-management-table td:not(:first-child) {
+  min-width: 120px;
+  max-width: none;
+  width: auto;
+}
+
+/* 工作地点列 - 防止换行导致表格变形 */
+.job-management-table th:nth-child(4),
+.job-management-table td:nth-child(4) {
+  min-width: 120px !important;
+  width: 120px !important; /* 固定宽度，防止变形 */
+  max-width: 120px !important; /* 确保最大宽度也固定 */
+  white-space: nowrap !important; /* 强制不换行 */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  /* 移除display: block，它会破坏表格结构 */
+}
+
+/* 招聘专业列 - 允许更宽的内容显示 */
+.job-management-table th:nth-child(5),
+.job-management-table td:nth-child(5) {
+  min-width: 200px;
+  white-space: normal;
+  word-wrap: break-word;
+  max-height: 60px;
+  overflow: visible;
+}
+
+.job-management-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  min-width: 40px;
+  box-sizing: border-box;
+  border-right: 1px solid #e2e8f0;
+  cursor: default;
+  text-align: center; /* 居中表格的列标题 */
+}
+
+/* 只冻结招聘信息管理页面的标题列 */
+.job-management-table th:first-child,
+.job-management-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  background-color: #f8fafc;
+  box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
+  border-right: 2px solid #e2e8f0;
+  min-width: 250px;
+  max-width: none; /* 移除最大宽度限制 */
+  width: auto; /* 允许自动调整宽度 */
+}
+
+/* 悬停时保持冻结列的背景色 */
+.job-management-table tbody tr:hover td:first-child {
+  background-color: #f1f5f9;
+}
+
+.job-management-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.job-management-table .inactive-row {
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.job-management-table .inactive-row:hover {
+  background-color: #e2e8f0;
+}
+
+.job-management-table .title-cell {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.job-management-table .actions-cell {
+  white-space: nowrap;
+  text-align: left;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.job-management-table .status-indicator {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.job-management-table .status-indicator.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.job-management-table .status-indicator.inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
