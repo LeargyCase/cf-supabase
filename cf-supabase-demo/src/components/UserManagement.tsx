@@ -9,9 +9,6 @@ interface User {
   is_active: boolean;
   created_at: string;
   updated_at: string;
-  // 会员相关字段
-  membership_type?: string;
-  membership_end_date?: string;
 }
 
 interface UserManagementProps {
@@ -41,7 +38,6 @@ const UserManagement: React.FC<UserManagementProps> = ({ onReturnToOverview }) =
   const loadUsers = async () => {
     setLoading(true);
     try {
-      // 构建基本查询获取用户数据
       let query = supabase
         .from('users')
         .select('*');
@@ -69,56 +65,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ onReturnToOverview }) =
         .range(from, to);
 
       if (error) throw error;
-
-      // 获取所有用户ID
-      const userIds = data?.map(user => user.id) || [];
-
-      // 如果没有用户，直接返回空数组
-      if (userIds.length === 0) {
-        setUsers([]);
-        setLoading(false);
-        return;
-      }
-
-      // 查询用户会员信息
-      console.log('查询会员信息的用户IDs:', userIds);
-      const { data: userInfoData, error: userInfoError } = await supabase
-        .from('user_info')
-        .select('*')
-        .in('user_id', userIds);
-
-      if (userInfoError) {
-        console.error('获取用户会员信息错误:', userInfoError);
-      }
-
-      console.log('获取到的用户会员信息:', userInfoData);
-
-      // 创建用户ID到会员信息的映射
-      const userInfoMap = {};
-      if (userInfoData) {
-        userInfoData.forEach(info => {
-          userInfoMap[info.user_id] = info;
-        });
-      }
-
-      console.log('用户会员信息映射:', userInfoMap); // 调试信息
-
-      // 处理返回的数据，将user_info中的会员信息添加到用户对象中
-      const processedUsers = data?.map(user => {
-        const userInfo = userInfoMap[user.id] || {};
-
-        console.log(`用户 ${user.id} (${user.username}) 的会员信息:`, userInfo);
-
-        return {
-          ...user,
-          membership_type: userInfo.membership_type || 'common_user',
-          membership_end_date: userInfo.membership_end_date || null
-        };
-      }) || [];
-
-      console.log('最终处理后的用户数据:', processedUsers);
-
-      setUsers(processedUsers);
+      setUsers(data || []);
     } catch (error: any) {
       console.error('加载用户数据错误:', error);
       setError(error.message);
@@ -300,35 +247,6 @@ const UserManagement: React.FC<UserManagementProps> = ({ onReturnToOverview }) =
     }
   };
 
-  // 格式化会员类型显示
-  const formatMembershipType = (type?: string) => {
-    switch (type) {
-      case 'official_user':
-        return '正式会员';
-      case 'temp_user':
-        return '试用会员';
-      case 'common_user':
-      default:
-        return '普通用户';
-    }
-  };
-
-  // 格式化会员截止日期显示
-  const formatMembershipEndDate = (date?: string | null) => {
-    if (!date) return '无';
-    const endDate = new Date(date);
-    const today = new Date();
-
-    // 计算剩余天数
-    const remainingDays = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-
-    if (remainingDays <= 0) {
-      return '已过期';
-    }
-
-    return `${endDate.toLocaleDateString('zh-CN')} (剩余${remainingDays}天)`;
-  };
-
   return (
     <div className="user-management-container">
       <button
@@ -439,16 +357,13 @@ const UserManagement: React.FC<UserManagementProps> = ({ onReturnToOverview }) =
           <div className="no-data-message">没有找到用户</div>
         ) : (
           <>
-            <div className="user-table-container">
-              <table className="user-table">
+            <table className="user-table">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>用户名</th>
                   <th>账号</th>
                   <th>状态</th>
-                  <th>会员类型</th>
-                  <th>会员截止日期</th>
                   <th>创建时间</th>
                   <th>操作</th>
                 </tr>
@@ -460,8 +375,6 @@ const UserManagement: React.FC<UserManagementProps> = ({ onReturnToOverview }) =
                     <td>{user.username}</td>
                     <td>{user.account}</td>
                     <td>{user.is_active ? '启用' : '禁用'}</td>
-                    <td>{formatMembershipType(user.membership_type)}</td>
-                    <td>{formatMembershipEndDate(user.membership_end_date)}</td>
                     <td>{new Date(user.created_at).toLocaleString('zh-CN')}</td>
                     <td>
                       <button
@@ -483,7 +396,6 @@ const UserManagement: React.FC<UserManagementProps> = ({ onReturnToOverview }) =
                 ))}
               </tbody>
             </table>
-            </div>
 
             {/* 分页控件 */}
             <div className="pagination">

@@ -758,52 +758,42 @@
 
 .save-profile-btn,
 .save-password-btn {
-  background-color: #2563eb;
+  background-color: #007aff;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
   transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 42px;
-  margin-top: 0;
-  vertical-align: middle;
+  margin-left: 10px;
+  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.2);
 }
 
 .save-profile-btn {
-  margin-left: 10px;
-  margin-top: 0; /* 移除可能导致按钮下移的margin */
-  padding: 0 1.5rem;
+  margin-bottom: 0;
 }
 
 .save-profile-btn:hover,
 .save-password-btn:hover {
-  background-color: #1d4ed8;
+  background-color: #0062cc;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 122, 255, 0.3);
 }
 
 .save-profile-btn:active,
 .save-password-btn:active {
-  transform: translateY(0);
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 122, 255, 0.2);
 }
 
 .save-profile-btn:disabled,
 .save-password-btn:disabled {
-  background-color: #94a3b8;
+  background-color: #8e8e93;
   cursor: not-allowed;
-  transform: none;
   box-shadow: none;
-}
-
-.save-password-btn {
-  margin-left: 10px;
-  padding: 0 1.5rem;
-  margin-top: 0; /* 移除可能导致按钮下移的margin */
+  transform: none;
 }
 
 /* 密码修改部分样式 */

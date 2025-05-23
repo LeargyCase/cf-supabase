@@ -779,29 +779,3 @@ select {
   margin-bottom: 0.5rem; /* 减少下方空白 */
   padding-bottom: 0;
 }
-
-/* 激活码管理页面输入框横向排列 */
-.activation-code-row {
-  display: flex;
-  flex-direction: row;
-  gap: 1.5rem;
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-
-.activation-code-row .form-group {
-  flex: 1; /* 均匀分配宽度 */
-  max-width: 33%;
-  margin-right: 0;
-}
-
-.activation-code-row input[type="text"],
-.activation-code-row input[type="number"] {
-  width: 100%;
-  max-width: 100%;
-}
-
-/* 调整生成激活码按钮的位置 */
-.activation-code-form .form-buttons {
-  margin-top: 0.5rem; /* 减少上方空白 */
-}

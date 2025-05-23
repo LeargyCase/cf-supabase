@@ -297,45 +297,43 @@ const ActivationCodeManagement: React.FC<ActivationCodeManagementProps> = ({ onR
       <div className="activation-code-form">
         <h3>生成新激活码</h3>
         <form onSubmit={handleGenerateCodes}>
-          <div className="activation-code-row">
-            <div className="form-group">
-              <label htmlFor="codePrefix">前缀</label>
-              <input
-                type="text"
-                id="codePrefix"
-                name="codePrefix"
-                value={formData.codePrefix}
-                onChange={handleFormChange}
-                required
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="codePrefix">前缀</label>
+            <input
+              type="text"
+              id="codePrefix"
+              name="codePrefix"
+              value={formData.codePrefix}
+              onChange={handleFormChange}
+              required
+            />
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="codeCount">生成数量 (1-100)</label>
-              <input
-                type="number"
-                id="codeCount"
-                name="codeCount"
-                min="1"
-                max="100"
-                value={formData.codeCount}
-                onChange={handleFormChange}
-                required
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="codeCount">生成数量 (1-100)</label>
+            <input
+              type="number"
+              id="codeCount"
+              name="codeCount"
+              min="1"
+              max="100"
+              value={formData.codeCount}
+              onChange={handleFormChange}
+              required
+            />
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="validityDays">有效期 (天)</label>
-              <input
-                type="number"
-                id="validityDays"
-                name="validityDays"
-                min="1"
-                value={formData.validityDays}
-                onChange={handleFormChange}
-                required
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="validityDays">有效期 (天)</label>
+            <input
+              type="number"
+              id="validityDays"
+              name="validityDays"
+              min="1"
+              value={formData.validityDays}
+              onChange={handleFormChange}
+              required
+            />
           </div>
 
           <div className="form-buttons">

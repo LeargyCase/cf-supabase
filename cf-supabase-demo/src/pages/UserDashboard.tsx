@@ -751,40 +751,17 @@ const UserDashboard = () => {
         throw new Error('用户未登录');
       }
 
-      // 添加调试信息
-      console.log('更新用户资料 - 用户信息:', {
-        id: user.id,
-        username: user.username,
-        type: typeof user.id
-      });
-      console.log('更新用户资料 - 新数据:', {
-        username: usernameInput,
-        icon: selectedIcon
-      });
+      // 使用存储过程更新用户名和头像，避免触发器问题
+      const { data, error } = await supabase.rpc(
+        'direct_update_user',
+        {
+          p_user_id: user.id,
+          p_username: usernameInput,
+          p_icon: selectedIcon
+        }
+      );
 
-      // 使用fetch直接发送请求
-      const apiUrl = `https://ptteznhpucxroxuebuix.supabase.co/rest/v1/users?id=eq.${user.id}`;
-
-      const response = await fetch(apiUrl, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
-          username: usernameInput,
-          icon: selectedIcon,
-          updated_at: new Date().toISOString()
-        })
-      });
-
-      console.log('直接请求结果:', response);
-
-      if (!response.ok) {
-        throw new Error(`更新失败: ${response.status} ${response.statusText}`);
-      }
+      if (error) throw error;
 
       // 使用系统提示框显示成功消息
       showAlert({
@@ -868,60 +845,29 @@ const UserDashboard = () => {
         throw new Error('用户未登录');
       }
 
-      // 使用fetch直接发送请求
-      console.log('更新密码 - 用户ID:', user.id);
+      // 验证当前密码
+      const { data, error } = await supabase
+        .from('users')
+        .select('password')
+        .eq('id', user.id)
+        .single();
 
-      // 先验证当前密码
-      const verifyUrl = `https://ptteznhpucxroxuebuix.supabase.co/rest/v1/users?id=eq.${user.id}&select=password`;
+      if (error) throw error;
 
-      const verifyResponse = await fetch(verifyUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE'
-        }
-      });
-
-      console.log('验证密码 - 响应状态:', verifyResponse.status);
-
-      if (!verifyResponse.ok) {
-        throw new Error(`验证密码失败: ${verifyResponse.status} ${verifyResponse.statusText}`);
-      }
-
-      const userData = await verifyResponse.json();
-      console.log('验证密码 - 响应数据:', userData);
-
-      if (!userData || userData.length === 0) {
-        throw new Error('找不到用户数据');
-      }
-
-      if (userData[0].password !== currentPassword) {
+      if (data.password !== currentPassword) {
         throw new Error('当前密码不正确');
       }
 
-      // 更新密码
-      const updateUrl = `https://ptteznhpucxroxuebuix.supabase.co/rest/v1/users?id=eq.${user.id}`;
+      // 使用存储过程更新密码，避免触发器问题
+      const { data: updateData, error: updateError } = await supabase.rpc(
+        'direct_update_user_password',
+        {
+          p_user_id: user.id,
+          p_password: newPassword
+        }
+      );
 
-      const updateResponse = await fetch(updateUrl, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0dGV6bmhwdWN4cm94dWVidWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5NTM1NzYsImV4cCI6MjAxNTUyOTU3Nn0.Yd_LYpHH23QXYGpnJkZfgbSX-Gk_ufbhMmGDXdT_BBE',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
-          password: newPassword,
-          updated_at: new Date().toISOString()
-        })
-      });
-
-      console.log('更新密码 - 响应状态:', updateResponse.status);
-
-      if (!updateResponse.ok) {
-        throw new Error(`更新密码失败: ${updateResponse.status} ${updateResponse.statusText}`);
-      }
+      if (updateError) throw updateError;
 
       // 使用系统提示框显示成功消息
       showAlert({
